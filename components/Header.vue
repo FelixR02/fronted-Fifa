@@ -2,15 +2,30 @@
   <header class="bg-green-600 text-white py-4">
     <div class="container mx-auto flex justify-between items-center">
       <div class="flex items-center">
-        <img src="/images/logo.png" alt="Logo" class="h-10 mr-3" />
-        <h1 class="text-xl font-bold">Mi Sitio de Fútbol</h1>
+        <NuxtImg
+          src="/images/logo.png"
+          alt="Logo del sitio"
+          class="h-10 mr-3"
+          width="40"
+          height="40"
+          format="webp"
+        />
+        <h1 class="text-xl font-bold">FutbolStats</h1>
       </div>
-      <nav>
+      <nav aria-label="Menú principal">
         <ul class="flex space-x-6">
-          <li><a href="#" class="hover:text-green-300 transition">Inicio</a></li>
-          <li><a href="#" class="hover:text-green-300 transition">Partidos</a></li>
-          <li><a href="#" class="hover:text-green-300 transition">Equipos</a></li>
-          <li><a href="#" class="hover:text-green-300 transition">Jugadores</a></li>
+          <li>
+            <NuxtLink to="/" class="hover:text-green-300 transition" aria-current="page">Inicio</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/partidos" class="hover:text-green-300 transition">Partidos</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/equipos" class="hover:text-green-300 transition">Equipos</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/jugadores" class="hover:text-green-300 transition">Jugadores</NuxtLink>
+          </li>
         </ul>
       </nav>
     </div>
@@ -18,5 +33,4 @@
 </template>
 
 <style scoped>
-/* Puedes agregar estilos adicionales aquí si es necesario */
 </style>

@@ -1,15 +1,20 @@
 <template>
-  <div id="app">
+  <div id="app" class="flex flex-col min-h-screen">
     <Header />
+    <div class="flex-grow">
+      <NuxtPage />
+    </div>
+    <Footer />
   </div>
 </template>
 
-<script>
-import header from './components/header.vue'; // Asegúrate de que la ruta sea correcta
+<script setup>
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 
 </script>
 
-<style>
-/* Aquí puedes añadir estilos específicos para tu aplicación */
+<style scoped>
+
 </style>

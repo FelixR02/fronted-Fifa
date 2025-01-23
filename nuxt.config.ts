@@ -1,14 +1,18 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./app.vue",
-    "./components/**/*.{vue,js,ts,jsx,tsx}",
-    "./layouts/**/*.{vue,js,ts,jsx,tsx}",
-    "./pages/**/*.{vue,js,ts,jsx,tsx}",
+export default defineNuxtConfig({
+  compatibilityDate: "2024-11-01",
+  devtools: { enabled: true },
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxt/image',
   ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+  css: [
+    '@/assets/css/tailwind.css',
+  ],
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
+  
+})
