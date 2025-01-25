@@ -18,13 +18,7 @@
             <NuxtLink to="/" class="hover:text-green-300 transition" aria-current="page">Inicio</NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/partidos" class="hover:text-green-300 transition">Partidos</NuxtLink>
-          </li>
-          <li>
             <NuxtLink to="/equipos" class="hover:text-green-300 transition">Equipos</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/jugadores" class="hover:text-green-300 transition">Jugadores</NuxtLink>
           </li>
         </ul>
       </nav>
