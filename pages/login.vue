@@ -40,16 +40,20 @@
   
   const {signIn, token} = useAuth();
   
-  const nombre_usuario = ref('');
+  const email = ref('');
   const password = ref('');
   const error = ref('');
   const config = useRuntimeConfig();
   
+  const formData = ref({
+  nombre_usuario: '',
+  password: ''
+});
   
   const login = async () => {
     try {
       const response = await signIn(
-        { email: nombre_usuario.value, password: password.value },
+        { email: formData.value.nombre_usuario, password: formData.value.password },
         { callbackUrl: "/", redirect: true }
       );
   

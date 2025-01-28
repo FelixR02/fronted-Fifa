@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     },
   },
 
-  auth: {
+  /* auth: {
     baseURL: process.env.APP_API_URL, // URL base de tu backend
     provider: {
       type: "local",
@@ -84,6 +84,6 @@ export default defineNuxtConfig({
       isEnabled: true, // Habilitar middleware global
       allow404WithoutAuth: true // Permitir 404 sin autenticación
     }
-  },
+  }, */
     compatibilityDate: '2025-01-15'
 });
