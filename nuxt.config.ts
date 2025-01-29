@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
-    "@sidebase/nuxt-auth",
+    /* "@sidebase/nuxt-auth", */
   ],
 
   css: ["@/assets/css/tailwind.css"],
