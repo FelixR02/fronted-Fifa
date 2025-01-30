@@ -20,6 +20,9 @@
           <li>
             <NuxtLink to="/equipos" class="hover:text-green-300 transition">Equipos</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/torneos" class="hover:text-green-300 transition">Torneos</NuxtLink>
+          </li>
         </ul>
       </nav>
     </div>
