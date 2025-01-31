@@ -8,11 +8,11 @@
         <!-- Formulario para crear torneo -->
         <form @submit.prevent="createTournament" class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
           <div class="mb-6">
-            <label for="name" class="block text-gray-700 font-semibold mb-2">Nombre del Torneo</label>
+            <label for="tournament_name" class="block text-gray-700 font-semibold mb-2">Nombre del Torneo</label>
             <input
-              v-model="tournament.name"
+              v-model="tournament.tournament_name"
               type="text"
-              id="name"
+              id="tournament_name"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
@@ -56,7 +56,7 @@
   <script setup>
   // Estado reactivo para el formulario
   const tournament = ref({
-    name: '',
+    tournament_name: '', // Cambiado de 'name' a 'tournament_name'
     description: '',
     logo: '',
   });

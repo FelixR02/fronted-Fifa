@@ -16,9 +16,11 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div
+        <!-- Tarjeta del equipo -->
+        <NuxtLink
           v-for="(team, index) in teams"
           :key="index"
+          :to="`/teams/${team.id}`"
           class="bg-white rounded-lg shadow-lg p-6 flex items-center cursor-pointer hover:shadow-xl transition-shadow relative"
         >
           <!-- Botones de editar y eliminar -->
@@ -27,6 +29,7 @@
             <NuxtLink
               :to="`/teams/edit/${team.id}`"
               class="p-2 text-blue-600 hover:text-blue-800 transition-colors"
+              @click.stop
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -66,12 +69,12 @@
             </button>
           </div>
 
-          <!-- Logo del equipo o ícono por defecto -->
+          <!-- Logo del equipo -->
           <div v-if="team.logo" class="w-24 h-24 mr-4">
             <NuxtImg
               :src="team.logo"
               :alt="`Logo de ${team.team_name}`"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover rounded-lg"
               width="96"
               height="96"
               format="webp"
@@ -94,31 +97,12 @@
             </svg>
           </div>
 
-          <!-- Nombre y descripción del equipo -->
+          <!-- Nombre y estadio del equipo -->
           <div>
             <h2 class="text-2xl font-semibold text-gray-800">{{ team.team_name }}</h2>
             <p class="text-gray-600">{{ team.estadium_name }}</p>
           </div>
-        </div>
-      </div>
-
-      <!-- Paginación -->
-      <div class="flex justify-center mt-8">
-        <button
-          @click="previousPage"
-          :disabled="page === 1"
-          class="px-4 py-2 bg-blue-600 text-white rounded-lg mx-2 disabled:bg-gray-400"
-        >
-          Anterior
-        </button>
-        <span class="px-4 py-2">{{ page }} de {{ totalPages }}</span>
-        <button
-          @click="nextPage"
-          :disabled="page === totalPages"
-          class="px-4 py-2 bg-blue-600 text-white rounded-lg mx-2 disabled:bg-gray-400"
-        >
-          Siguiente
-        </button>
+        </NuxtLink>
       </div>
     </div>
   </div>
