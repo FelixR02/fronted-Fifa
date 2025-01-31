@@ -104,6 +104,19 @@
           </div>
         </NuxtLink>
       </div>
+
+      <!-- Paginación -->
+      <div class="flex justify-center mt-8">
+        <button @click="previousPage" :disabled="page === 1"
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg mx-2 disabled:bg-gray-400">
+          Anterior
+        </button>
+        <span class="px-4 py-2">{{ page }} de {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="page === totalPages"
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg mx-2 disabled:bg-gray-400">
+          Siguiente
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -123,8 +136,11 @@ async function loadTeams() {
       limit: limit.value,
     },
   });
-  teams.value = data.value.teams;
-  totalPages.value = Math.ceil(data.value.total / limit.value);
+
+  if (data.value) {
+    teams.value = data.value.teams; // Asegúrate de que esto coincida con la respuesta del backend
+    totalPages.value = Math.ceil(data.value.total / limit.value);
+  }
 }
 
 // Cargar equipos al inicio

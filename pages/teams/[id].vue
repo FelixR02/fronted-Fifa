@@ -20,7 +20,7 @@
           <!-- Botones de editar y eliminar -->
           <div class="absolute top-2 right-2 flex space-x-2">
             <!-- Botón de editar -->
-            <NuxtLink :to="`/teams/${teamId}/players/edit/${player.id}`"
+            <NuxtLink :to="`/players/edit/${player.id}`"
               class="p-2 text-blue-600 hover:text-blue-800 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
