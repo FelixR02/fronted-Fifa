@@ -97,13 +97,22 @@ const player = ref({
 });
 
 // Obtener los datos del jugador
-const { data } = await useFetch(`/teams/${teamId}/players/${playerId}`, {
+const { data, error } = await useFetch(`/teams/${teamId}/players/${playerId}`, {
   baseURL: useRuntimeConfig().public.BACKEND_URL,
 });
 
-// Asignar los datos del jugador si existen
+// Verificar si los datos se cargaron correctamente
 if (data.value) {
-  player.value = data.value;
+  // Asignar los datos del jugador al estado
+  player.value = {
+    player_name: data.value.player_name,
+    games_played: data.value.games_played,
+    goals: data.value.goals,
+    assists: data.value.assists,
+    tarjets: data.value.tarjets,
+  };
+} else {
+  console.error('Error al cargar el jugador:', error.value);
 }
 
 // Función para actualizar el jugador
