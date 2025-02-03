@@ -1,6 +1,12 @@
 <template>
   <div class="min-h-screen bg-gray-100 py-8">
     <div class="container mx-auto">
+        <!-- Botón para volver a la lista de equipos -->
+        <div class="mb-8">
+        <NuxtLink to="/equipos" class="text-blue-600 hover:text-blue-800">
+          &larr; Volver a Equipos
+        </NuxtLink>
+      </div>
       <h1 class="text-4xl font-bold text-center text-blue-600 mb-8">
         Jugadores de {{ team.team_name }}
       </h1>

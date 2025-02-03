@@ -140,7 +140,7 @@ async function updatePlayer() {
       body: player.value,
     });
     alert('Jugador actualizado exitosamente');
-    router.push(`/teams/${teamId}/players/${playerId}`); // Redirigir a la lista de jugadores
+    router.push(`/teams/${teamId}`); // Redirigir a la lista de jugadores
   } catch (error) {
     alert('Error al actualizar el jugador');
     console.error(error);

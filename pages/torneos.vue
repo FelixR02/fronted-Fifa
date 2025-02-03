@@ -14,7 +14,7 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="(tournament, index) in tournaments" :key="index"
+        <NuxtLink v-for="(tournament, index) in tournaments" :key="index" :to="`/tournaments/${tournament.id}`"
           class="bg-white rounded-lg shadow-lg p-6 flex items-center cursor-pointer hover:shadow-xl transition-shadow relative">
           <!-- Botones de editar y eliminar -->
           <div class="absolute top-2 right-2 flex space-x-2">
@@ -57,7 +57,7 @@
             <h2 class="text-2xl font-semibold text-gray-800">{{ tournament.tournament_name }}</h2>
             <p class="text-gray-600">{{ tournament.description }}</p>
           </div>
-        </div>
+        </NuxtLink>
       </div>
 
       <!-- Paginación -->
