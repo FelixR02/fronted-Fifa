@@ -72,8 +72,9 @@
           <button
             type="submit"
             class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            :disabled="loading"
           >
-            Guardar Cambios
+            {{ loading ? 'Guardando...' : 'Guardar Cambios' }}
           </button>
         </div>
       </form>
@@ -82,10 +83,13 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 const route = useRoute();
 const router = useRouter();
 const teamId = route.params.id;
-const playerId = route.params.playerId;
+const playerId = route.params.id;
 
 // Estado inicial del jugador
 const player = ref({
@@ -96,38 +100,52 @@ const player = ref({
   tarjets: 0,
 });
 
-// Obtener los datos del jugador
-const { data, error } = await useFetch(`/teams/${teamId}/players/${playerId}`, {
-  baseURL: useRuntimeConfig().public.BACKEND_URL,
-});
+const loading = ref(false);
 
-// Verificar si los datos se cargaron correctamente
-if (data.value) {
-  // Asignar los datos del jugador al estado
-  player.value = {
-    player_name: data.value.player_name,
-    games_played: data.value.games_played,
-    goals: data.value.goals,
-    assists: data.value.assists,
-    tarjets: data.value.tarjets,
-  };
-} else {
-  console.error('Error al cargar el jugador:', error.value);
+// Función para cargar los datos del jugador
+async function loadPlayer() {
+  try {
+    const { data, error } = await useFetch(`/players/${playerId}`, {
+      baseURL: useRuntimeConfig().public.BACKEND_URL,
+    });
+
+    if (data.value) {
+      player.value = {
+        player_name: data.value.player_name,
+        games_played: data.value.games_played,
+        goals: data.value.goals,
+        assists: data.value.assists,
+        tarjets: data.value.tarjets,
+      };
+    } else {
+      console.error('Error al cargar el jugador:', error.value);
+    }
+  } catch (error) {
+    console.error('Error al cargar el jugador:', error);
+  }
 }
+
+// Cargar los datos del jugador cuando el componente se monta
+onMounted(() => {
+  loadPlayer();
+});
 
 // Función para actualizar el jugador
 async function updatePlayer() {
+  loading.value = true;
   try {
-    await $fetch(`/teams/${teamId}/players/${playerId}`, {
+    await $fetch(`/players/${playerId}`, {
       baseURL: useRuntimeConfig().public.BACKEND_URL,
       method: 'PUT',
       body: player.value,
     });
     alert('Jugador actualizado exitosamente');
-    navigateTo(`/teams/${teamId}/players`); // Redirigir a la lista de jugadores
+    router.push(`/teams/${teamId}/players/${playerId}`); // Redirigir a la lista de jugadores
   } catch (error) {
     alert('Error al actualizar el jugador');
     console.error(error);
+  } finally {
+    loading.value = false;
   }
 }
 </script>
