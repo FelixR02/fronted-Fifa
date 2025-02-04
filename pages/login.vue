@@ -5,7 +5,7 @@
         <!-- Campo para el Nombre de Usuario -->
         <label class="block mb-2 text-white">Nombre de Usuario</label>
         <input 
-          v-model="nombre_usuario" 
+          v-model="email" 
           type="text" 
           required 
           class="p-3 border border-red-500 rounded-lg w-full mb-4 text-black placeholder-gray-400" 
@@ -22,8 +22,11 @@
           placeholder="Ingresa tu contraseña"
         />
         
-        <!-- Botón de Inicio de Sesión -->
-        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200">
+          <!-- Botón de Inicio de Sesión -->
+          <button 
+          type="submit"
+          class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200"
+        >
           Iniciar Sesión
         </button>
       </form>
@@ -36,7 +39,7 @@
   
   import { ref } from 'vue';
   import { definePageMeta } from '#imports';
-  import { useRuntimeConfig } from '#app';
+  import { useRuntimeConfig, useRouter } from '#app';
   
   const {signIn, token} = useAuth();
   
@@ -44,24 +47,51 @@
   const password = ref('');
   const error = ref('');
   const config = useRuntimeConfig();
-  
+  const router = useRouter();
   const formData = ref({
-  nombre_usuario: '',
+  email: '',
   password: ''
 });
   
-  const login = async () => {
-    try {
-      const response = await signIn(
-        { email: formData.value.nombre_usuario, password: formData.value.password },
-        { callbackUrl: "/", redirect: true }
-      );
-  
-    } catch (err) {
-      console.error('Error durante el inicio de sesión:', err); // Muestra el error completo
-      error.value = err?.response?.data?.message || 'Credenciales inválidas. Por favor, verifica tus datos.';
+const login = async () => {
+  try {
+    console.log(`${config.public.BACKEND_URL}login`)
+    const response = await fetch(`${config.public.BACKEND_URL}login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
     }
-  };
+
+    const data = await response.json();
+    console.log('Respuesta del backend:', data);
+
+    // Verificar si la autenticación se ha realizado con éxito
+    if (data.accessToken && data.refreshToken) {
+      // Guardar tokens en localStorage o cookies
+      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+
+      // Redirigir al usuario
+      console.log("Redirigendo al index");
+      await router.push('/');
+    } else {
+      console.error('Error durante el inicio de sesión:', 'No se han recibido tokens de autenticación');
+      error.value = 'Credenciales inválidas. Por favor, verifica tus datos.';
+    }
+  } catch (err) {
+    console.error('Error durante el inicio de sesión:', err);
+    error.value = err.message || 'Credenciales inválidas. Por favor, verifica tus datos.';
+  }
+};
   
   // Metadatos de la página para manejar autenticación
   definePageMeta({

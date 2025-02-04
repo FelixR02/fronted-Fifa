@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
-    /* "@sidebase/nuxt-auth", */
+    "@sidebase/nuxt-auth",
   ],
 
   css: ["@/assets/css/tailwind.css"],
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     },
   },
 
-  /* auth: {
+  auth: {
     baseURL: process.env.APP_API_URL, // URL base de tu backend
     provider: {
       type: "local",
@@ -51,9 +51,9 @@ export default defineNuxtConfig({
       session: {
         dataType: {
           id: 'number',
+          first_name: "string",
+          last_name: "string",
           email: 'string',
-          phone_number: 'string',
-          username: 'string',
           rol: "'administrador' | 'usuario'",
           //twoFactorEnabled: "boolean", // Opcional según el diseño
         },
@@ -65,25 +65,25 @@ export default defineNuxtConfig({
         type: "Bearer", 
         headerName: "Authorization" 
       },
-      // refresh: {
-      //   isEnabled: true, 
-      //   endpoint: {
-      //     path: '/CheckpointReviews/usuarios/refresh-token', // Ruta para renovar el access token
-      //     method: 'post'
-      //   },
-      //   refreshOnlyToken: true,
-      //   token: {
-      //     signInResponseRefreshTokenPointer: '/refreshToken', // Ruta al refresh token en la respuesta
-      //     refreshRequestTokenPointer: '/refreshToken', // Ruta al token enviado para renovar
-      //     maxAgeInSeconds: 86400, // Tiempo de vida del refresh token (1 días)
-      //     cookieName: 'refresh_token' // Nombre de la cookie para almacenar el refresh token (opcional)
-      //   }
-      // }
+       refresh: {
+         isEnabled: true, 
+         endpoint: {
+           path: '/refresh-token', // Ruta para renovar el access token
+           method: 'post'
+         },
+         refreshOnlyToken: true,
+         token: {
+           signInResponseRefreshTokenPointer: '/refreshToken', // Ruta al refresh token en la respuesta
+           refreshRequestTokenPointer: '/refreshToken', // Ruta al token enviado para renovar
+           maxAgeInSeconds: 86400, // Tiempo de vida del refresh token (1 días)
+           cookieName: 'refresh_token' // Nombre de la cookie para almacenar el refresh token (opcional)
+         }
+       }
     },
     globalAppMiddleware: {
       isEnabled: true, // Habilitar middleware global
       allow404WithoutAuth: true // Permitir 404 sin autenticación
     }
-  }, */
+  },
     compatibilityDate: '2025-01-15'
 });
