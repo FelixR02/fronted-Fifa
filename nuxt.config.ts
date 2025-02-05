@@ -29,19 +29,19 @@ export default defineNuxtConfig({
       endpoints: {
         
         signIn: {
-          path: "/login",
+          path: "login",
           method: "post"
         },
         signUp: {
-          path: "/usuarios",
+          path: "crearUsuarios",
           method: "post"
         },
         signOut: {
-          path: "/logout",
+          path: "logout",
           method: "post"
         },
         getSession: {
-          path: "/me", ///dudas acerca de esto 
+          path: "me", ///dudas acerca de esto 
           method: "get"
         }
       },
@@ -65,7 +65,7 @@ export default defineNuxtConfig({
         type: "Bearer", 
         headerName: "Authorization" 
       },
-       refresh: {
+      /* refresh: {
          isEnabled: true, 
          endpoint: {
            path: '/refresh-token', // Ruta para renovar el access token
@@ -78,7 +78,7 @@ export default defineNuxtConfig({
            maxAgeInSeconds: 86400, // Tiempo de vida del refresh token (1 días)
            cookieName: 'refresh_token' // Nombre de la cookie para almacenar el refresh token (opcional)
          }
-       }
+       }*/
     },
     globalAppMiddleware: {
       isEnabled: true, // Habilitar middleware global

@@ -159,21 +159,26 @@ function closeAddTeamsModal() {
 // Función para agregar un equipo al torneo
 async function addTeamToTournament(teamId) {
   try {
-    await $fetch(`/tournaments/${route.params.id}/add-team/${teamId}`, {
+    await $fetch(`/tournaments/${route.params.id}/add-teams`, {
       baseURL: useRuntimeConfig().public.BACKEND_URL,
       method: 'POST',
+      body: {
+        teamsIds: [teamId] // Envía el teamId en un array
+      }
     });
-    alert('Equipo agregado al torneo con éxito');
     
-    // Actualizar la lista de equipos en el torneo
-    const addedTeam = availableTeams.value.find(team => team.id === teamId);
-    teams.value.push(addedTeam);
-    
-    // Eliminar el equipo de la lista de equipos disponibles
+    // Actualizar la lista de equipos
+    const { data: updatedTeams } = await useFetch(`/tournaments/${route.params.id}/teams`, {
+      baseURL: useRuntimeConfig().public.BACKEND_URL,
+    });
+    teams.value = updatedTeams.value;
+
+    // Actualizar lista de equipos disponibles
     availableTeams.value = availableTeams.value.filter(team => team.id !== teamId);
+    
   } catch (error) {
-    console.error('Error al agregar el equipo al torneo:', error);
-    alert('Hubo un error al agregar el equipo al torneo');
+    console.error('Error al agregar el equipo:', error);
+    alert('Error al agregar equipo: ' + error.data?.error || error.message);
   }
 }
 

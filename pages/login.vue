@@ -40,53 +40,22 @@
   import { ref } from 'vue';
   import { definePageMeta } from '#imports';
   import { useRuntimeConfig, useRouter } from '#app';
-  
   const {signIn, token} = useAuth();
   
-  const email = ref('');
-  const password = ref('');
   const error = ref('');
   const config = useRuntimeConfig();
   const router = useRouter();
-  const formData = ref({
-  email: '',
-  password: ''
-});
+  const email = ref('');
+  const password = ref('');
+
   
 const login = async () => {
   try {
-    console.log(`${config.public.BACKEND_URL}login`)
-    const response = await fetch(`${config.public.BACKEND_URL}login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value,
-      }),
-    });
+   const response = await signIn(
+      { email: email.value, password: password.value },
+      {callbackUrl: "/", redirect: true}
+    );
 
-    if (!response.ok) {
-      throw new Error('Error en la solicitud');
-    }
-
-    const data = await response.json();
-    console.log('Respuesta del backend:', data);
-
-    // Verificar si la autenticación se ha realizado con éxito
-    if (data.accessToken && data.refreshToken) {
-      // Guardar tokens en localStorage o cookies
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-
-      // Redirigir al usuario
-      console.log("Redirigendo al index");
-      await router.push('/');
-    } else {
-      console.error('Error durante el inicio de sesión:', 'No se han recibido tokens de autenticación');
-      error.value = 'Credenciales inválidas. Por favor, verifica tus datos.';
-    }
   } catch (err) {
     console.error('Error durante el inicio de sesión:', err);
     error.value = err.message || 'Credenciales inválidas. Por favor, verifica tus datos.';

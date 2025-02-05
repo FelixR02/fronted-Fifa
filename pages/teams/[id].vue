@@ -24,7 +24,7 @@
         <div v-for="(player, index) in players" :key="index"
           class="flex items-center border-b border-gray-200 py-4 relative">
           <!-- Botones de editar y eliminar -->
-          <div class="absolute top-2 right-2 flex space-x-2">
+          <div  class="absolute top-2 right-2 flex space-x-2" >
             <!-- Botón de editar -->
             <NuxtLink :to="`/players/edit/${player.id}`"
               class="p-2 text-blue-600 hover:text-blue-800 transition-colors">
@@ -71,6 +71,12 @@
 </template>
 
 <script setup>
+
+import {computed} from "vue";
+const {data} = useAuth();
+const isAdmin = computed(() => data.value?.rol);
+const admin = computed(() => isAdmin.value === "administrador");
+
 const route = useRoute();
 const teamId = route.params.id;
 

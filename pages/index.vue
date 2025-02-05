@@ -49,6 +49,10 @@ onMounted(() => {
     currentCard.value = (currentCard.value + 1) % cards.value.length;
   }, 5000); // Cambia cada 5 segundos
 });
+
+definePageMeta({
+  middleware: ['sidebase-auth']
+})
 </script>
 
 <style scoped>
