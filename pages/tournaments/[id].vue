@@ -184,18 +184,25 @@ async function addTeamToTournament(teamId) {
 
 // Función para eliminar un equipo del torneo
 async function deleteTeamFromTournament(teamId) {
-  if (confirm('¿Estás seguro de que deseas eliminar este equipo del torneo?')) {
-    try {
-      await $fetch(`/tournaments/${route.params.id}/remove-team/${teamId}`, {
-        baseURL: useRuntimeConfig().public.BACKEND_URL,
-        method: 'DELETE',
-      });
-      // Recargar la lista de equipos después de eliminar
-      teams.value = teams.value.filter(team => team.id !== teamId);
-    } catch (error) {
-      console.error('Error al eliminar el equipo del torneo:', error);
+    if (confirm('¿Estás seguro de que deseas eliminar este equipo del torneo?')) {
+        try {
+            await $fetch(`/tournaments/${route.params.id}/remove-team/${teamId}`, {
+                baseURL: useRuntimeConfig().public.BACKEND_URL,
+                method: 'DELETE',
+            });
+            
+            teams.value = teams.value.filter(team => team.id !== teamId);
+            
+            const { data: removedTeam } = await useFetch(`/teams/${teamId}`, {
+                baseURL: useRuntimeConfig().public.BACKEND_URL,
+            });
+            availableTeams.value.push(removedTeam.value);
+            
+        } catch (error) {
+            console.error('Error al eliminar el equipo:', error);
+            alert(error.data?.error || error.message);
+        }
     }
-  }
 }
 </script>
 

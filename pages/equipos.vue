@@ -5,8 +5,8 @@
         Equipos de Fútbol
       </h1>
 
-      <!-- Botón para agregar equipo -->
-      <div class="text-center mb-8">
+      <!-- Botón para agregar equipo solo si es administrador -->
+      <div class="text-center mb-8" v-if="isAdmin">
         <NuxtLink
           to="/teams/create"
           class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
@@ -23,8 +23,8 @@
           :to="`/teams/${team.id}`"
           class="bg-white rounded-lg shadow-lg p-6 flex items-center cursor-pointer hover:shadow-xl transition-shadow relative"
         >
-          <!-- Botones de editar y eliminar -->
-          <div class="absolute top-2 right-2 flex space-x-2">
+          <!-- Botones de editar y eliminar solo si es administrador -->
+          <div class="absolute top-2 right-2 flex space-x-2" v-if="isAdmin">
             <!-- Botón de editar -->
             <NuxtLink
               :to="`/teams/edit/${team.id}`"
@@ -85,11 +85,11 @@
               xmlns="http://www.w3.org/2000/svg"
               class="h-12 w-12 text-gray-500"
               fill="none"
-              viewBox="0 0 24 24"
+              viewBox ="0 0 24 24"
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
+                stroke-linecap=" round"
                 stroke-linejoin="round"
                 stroke-width="2"
                 d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
@@ -122,10 +122,13 @@
 </template>
 
 <script setup>
+import { ref, onBeforeMount } from 'vue';
+
 const page = ref(1);
 const limit = ref(10);
 const totalPages = ref(1);
 const teams = ref([]);
+const isAdmin = ref(false); // Cambia esto según la lógica de autenticación
 
 // Función para cargar los equipos
 async function loadTeams() {
@@ -143,8 +146,15 @@ async function loadTeams() {
   }
 }
 
-// Cargar equipos al inicio
-loadTeams();
+// Cargar equipos antes de montar el componente
+onBeforeMount(() => {
+  const { data, status } = useAuth();
+  const userRole = computed(() => data.value?.rol);
+  const showUsers = computed(() => userRole.value === 'administrador');
+  isAdmin.value = showUsers.value
+
+  loadTeams();
+});
 
 // Navegar a la página anterior
 function previousPage() {

@@ -55,7 +55,7 @@ const login = async () => {
       { email: email.value, password: password.value },
       {callbackUrl: "/", redirect: true}
     );
-
+    
   } catch (err) {
     console.error('Error durante el inicio de sesión:', err);
     error.value = err.message || 'Credenciales inválidas. Por favor, verifica tus datos.';
