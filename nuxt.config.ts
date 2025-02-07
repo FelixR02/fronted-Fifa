@@ -15,6 +15,27 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  app: {
+    head: {
+      title: "FutbolStats",
+      meta: [
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        {
+          hid: "description",
+          name: "description",
+          content: "Para ver estadísticas de los jugadores de futbol y los equipos que participan en cada torneo alrededor del mundo.",
+        },
+        { name: "keywords", content: "Futbol, estadísticas, equipos, jugadores" },
+        { name: "author", content: "Félix Rodríguez" },
+        { property: "og:title", content: "FutbolStats" },
+        { property: "og:description", content: "Para ver estadísticas de los jugadores de futbol y los equipos que participan en cada torneo." },
+        { property: "og:image", content: "/images/logo.png" }, // Ruta de tu logo
+        { property: "og:url", content: "https://fronted-fifa.onrender.com" }, // URL de tu sitio
+      ],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    },
+  },
 
   runtimeConfig: {
     public: {
