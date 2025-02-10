@@ -66,9 +66,9 @@ export default defineNuxtConfig({
           method: "get"
         }
       },
-      pages: {
+      /*pages: {
         login: "/login" // Página de inicio de sesión en tu frontend
-      },
+      },*/
       session: {
         dataType: {
           id: 'number',
@@ -103,7 +103,8 @@ export default defineNuxtConfig({
     },
     globalAppMiddleware: {
       isEnabled: true, // Habilitar middleware global
-      allow404WithoutAuth: true // Permitir 404 sin autenticación
+      allow404WithoutAuth: true, // Permitir 404 sin autenticación
+      addDefaultCallbackUrl: true
     }
   },
     compatibilityDate: '2025-01-15'
